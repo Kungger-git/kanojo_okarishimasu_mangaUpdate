@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import colorama
+import colorama, os
 
 
 def main(driver):
@@ -27,10 +27,17 @@ def main(driver):
     finally:
         driver.quit()
 
+def look_for_driver():
+    os.chdir('/')
+    cwd = os.getcwd()
+    for root, dirs, files in os.walk(cwd):
+        if 'msedgedriver.exe' in files:
+            return os.path.join(root, 'msedgedriver.exe')
+        elif 'msedgedriver' in files:
+            return os.path.join(root, 'msedgedriver')
 
 if __name__ == '__main__':
-    edge = webdriver.Edge(
-        '/Users/jimfe/Documents/msedgedriver.exe')
+    edge = webdriver.Edge(look_for_driver())
     colorama.init()
     main(edge)
     print('\n\n')
