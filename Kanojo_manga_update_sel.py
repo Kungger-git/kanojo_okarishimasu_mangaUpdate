@@ -2,7 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import colorama, os, platform
+from selenium.common.exceptions import WebDriverException
+import colorama
+import os
+import platform
 
 
 def main(driver):
@@ -17,13 +20,16 @@ def main(driver):
         for tag in article.find_elements_by_tag_name('h1'):
             title = tag.find_element_by_class_name('post-name')
             print('\n')
-            print(colorama.Fore.LIGHTCYAN_EX, title.text, colorama.Style.RESET_ALL)
+            print(colorama.Fore.LIGHTCYAN_EX,
+                  title.text, colorama.Style.RESET_ALL)
 
         for chapter in article.find_elements_by_xpath('/html/body/div[1]/div/article[1]/div/div[2]/a[2]'):
             new = chapter.find_element_by_class_name('h-6')
-            time = driver.find_element_by_xpath('/html/body/div[1]/div/article[2]/ul/li[1]/span')
+            time = driver.find_element_by_xpath(
+                '/html/body/div[1]/div/article[2]/ul/li[1]/span')
             print('\nNew Chapter:')
-            print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'), colorama.Style.RESET_ALL, time.text)
+            print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
+                  colorama.Style.RESET_ALL, 'Uploaded ' + time.text)
     finally:
         driver.quit()
 
@@ -51,6 +57,8 @@ def seek_driver(opsys):
                 return os.path.join(root, 'msedgedriver')
             elif 'chromedriver' in files:
                 return os.path.join(root, 'chromedriver')
+            elif 'geckodriver' in files:
+                return os.path.join(root, 'geckodriver')
 
 
 def identify_os():
@@ -59,7 +67,19 @@ def identify_os():
 
 
 if __name__ == '__main__':
-    browser = webdriver.Edge(identify_os())
     colorama.init()
-    main(browser)
+    brs = ['Chrome', 'Edge']
+    for br in brs:
+        print(br)
+
+    select_browser = str(input('Select Browser: '))
+    try:
+        if select_browser == 'Chrome':
+            browser = webdriver.Chrome(identify_os())
+            main(browser)
+        elif select_browser == 'Edge':
+            browser = webdriver.Edge(identify_os())
+            main(browser)
+    except WebDriverException as err:
+        print('\n\nNo WebDriver Found For ' + select_browser, err)
     print('\n\n')
