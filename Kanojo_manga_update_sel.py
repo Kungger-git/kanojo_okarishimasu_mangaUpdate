@@ -37,12 +37,14 @@ def seek_driver(opsys):
                 return os.path.join(root, 'msedgedriver.exe')
             elif 'chromedriver.exe' in files:
                 return os.path.join(root, 'chromedriver.exe')
+
     elif opsys == 'Darwin':
         for root, dirs, files in os.walk(cwd):
             if 'msedgedriver' in files:
                 return os.path.join(root, 'msedgedriver')
             elif 'chromedriver' in files:
                 return os.path.join(root, 'chromedriver')
+
     elif opsys == 'Linux':
         for root, dirs, files in os.walk(cwd):
             if 'msedgedriver' in files:
@@ -57,7 +59,7 @@ def identify_os():
 
 
 if __name__ == '__main__':
-    browser = webdriver.Edge(seek_driver())
+    browser = webdriver.Edge(identify_os())
     colorama.init()
     main(browser)
     print('\n\n')
