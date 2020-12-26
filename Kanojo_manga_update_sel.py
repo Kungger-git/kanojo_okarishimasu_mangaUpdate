@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import colorama, os
+import colorama, os, platform
 
 
 def main(driver):
@@ -27,17 +27,37 @@ def main(driver):
     finally:
         driver.quit()
 
-def look_for_driver():
+
+def seek_driver(opsys):
     os.chdir('/')
     cwd = os.getcwd()
-    for root, dirs, files in os.walk(cwd):
-        if 'msedgedriver.exe' in files:
-            return os.path.join(root, 'msedgedriver.exe')
-        elif 'msedgedriver' in files:
-            return os.path.join(root, 'msedgedriver')
+    if opsys == 'Windows':
+        for root, dirs, files in os.walk(cwd):
+            if 'msedgedriver.exe' in files:
+                return os.path.join(root, 'msedgedriver.exe')
+            elif 'chromedriver.exe' in files:
+                return os.path.join(root, 'chromedriver.exe')
+    elif opsys == 'Darwin':
+        for root, dirs, files in os.walk(cwd):
+            if 'msedgedriver' in files:
+                return os.path.join(root, 'msedgedriver')
+            elif 'chromedriver' in files:
+                return os.path.join(root, 'chromedriver')
+    elif opsys == 'Linux':
+        for root, dirs, files in os.walk(cwd):
+            if 'msedgedriver' in files:
+                return os.path.join(root, 'msedgedriver')
+            elif 'chromedriver' in files:
+                return os.path.join(root, 'chromedriver')
+
+
+def identify_os():
+    operating_system = platform.system()
+    return seek_driver(operating_system)
+
 
 if __name__ == '__main__':
-    browser = webdriver.Edge(look_for_driver())
+    browser = webdriver.Edge(seek_driver())
     colorama.init()
     main(browser)
     print('\n\n')
