@@ -51,15 +51,6 @@ def seek_driver(opsys):
             elif 'chromedriver' in files:
                 return os.path.join(root, 'chromedriver')
 
-    elif opsys == 'Linux':
-        for root, dirs, files in os.walk(cwd):
-            if 'msedgedriver' in files:
-                return os.path.join(root, 'msedgedriver')
-            elif 'chromedriver' in files:
-                return os.path.join(root, 'chromedriver')
-            elif 'geckodriver' in files:
-                return os.path.join(root, 'geckodriver')
-
 
 def identify_os():
     operating_system = platform.system()
@@ -70,9 +61,11 @@ if __name__ == '__main__':
     colorama.init()
     brs = ['Chrome', 'Edge']
     for br in brs:
-        print(br)
+        print(br + '\n')
 
     select_browser = str(input('Select Browser: '))
+    if select_browser == 'cancel':
+        quit()
     try:
         if select_browser == 'Chrome':
             browser = webdriver.Chrome(identify_os())
