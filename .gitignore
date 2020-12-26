@@ -1,0 +1,10 @@
+# Mac Files
+.DS_Store
+
+# vs code
+.vscode
+__pycache__
+
+# vim
+..gitignore.un~
+.gitignore~
