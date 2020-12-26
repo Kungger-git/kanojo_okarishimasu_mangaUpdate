@@ -37,7 +37,7 @@ def look_for_driver():
             return os.path.join(root, 'msedgedriver')
 
 if __name__ == '__main__':
-    edge = webdriver.Edge(look_for_driver())
+    browser = webdriver.Edge(look_for_driver())
     colorama.init()
-    main(edge)
+    main(browser)
     print('\n\n')
