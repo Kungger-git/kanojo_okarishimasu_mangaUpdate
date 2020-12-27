@@ -6,12 +6,12 @@ from selenium.common.exceptions import WebDriverException
 import colorama
 import os
 import platform
+import time
 
 
 def main(driver):
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
-
     try:
         article = WebDriverWait(driver, 0).until(
             EC.presence_of_element_located(
@@ -57,6 +57,12 @@ def identify_os():
     return seek_driver(operating_system)
 
 
+def convert(seconds):
+    min, sec = divmod(seconds, 60)
+    hour, min = divmod(min, 60)
+    return "%d:%02d:%02d" % (hour, min, sec)
+
+
 if __name__ == '__main__':
     colorama.init()
     brs = ['Chrome', 'Edge']
@@ -67,11 +73,16 @@ if __name__ == '__main__':
     if select_browser == 'cancel':
         quit()
     try:
+        start = time.time()
         if select_browser == 'Chrome':
             browser = webdriver.Chrome(identify_os())
+            end = time.time()
+            print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
         elif select_browser == 'Edge':
             browser = webdriver.Edge(identify_os())
+            end = time.time()
+            print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
     except WebDriverException as err:
         print('\n\nNo WebDriver Found For ' + select_browser, err)
