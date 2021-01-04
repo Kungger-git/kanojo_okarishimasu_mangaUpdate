@@ -1,4 +1,5 @@
 from selenium import webdriver
+import selenium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -37,6 +38,8 @@ def main(driver):
             if time.text in time_states:
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
+    except WebDriverException as err:
+        print(colorama.Fore.RED, '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
     finally:
         driver.quit()
 
