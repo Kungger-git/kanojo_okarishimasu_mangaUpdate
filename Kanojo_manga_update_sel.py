@@ -7,9 +7,12 @@ import colorama
 import os
 import platform
 import time
+import webbrowser
 
 
 def main(driver):
+    time_states = ['Today', '1 day ago', '2 days ago',
+     '3 days ago', '4 days ago', '5 days ago', '6 days ago', '7 days ago']
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
     try:
@@ -30,6 +33,10 @@ def main(driver):
             print('\nNew Chapter:')
             print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + time.text)
+        
+            if time.text in time_states:
+                webbrowser.open(
+                    'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
     finally:
         driver.quit()
 
