@@ -11,8 +11,8 @@ import webbrowser
 
 
 def main(driver):
-    driver.set_window_size(900, 900)
-    driver.set_window_position(0,0)
+    time_states = ['Today', '1 day ago', '2 days ago',
+        '3 days ago', '4 days ago', '5 days ago', '6 days ago']
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
     try:
@@ -58,15 +58,6 @@ def seek_driver(opsys):
             elif 'chromedriver' in files:
                 return os.path.join(root, 'chromedriver')
 
-    elif opsys == 'Linux':
-        for root, dirs, files in os.walk(cwd):
-            if 'msedgedriver' in files:
-                return os.path.join(root, 'msedgedriver')
-            elif 'chromedriver' in files:
-                return os.path.join(root, 'chromedriver')
-            elif 'geckodriver' in files:
-                return os.path.join(root, 'geckodriver')
-
 
 def identify_os():
     operating_system = platform.system()
@@ -81,7 +72,7 @@ def convert(seconds):
 
 if __name__ == '__main__':
     colorama.init()
-    brs = ['Chrome', 'Edge', 'Firefox']
+    brs = ['Chrome', 'Edge']
     for br in brs:
         print(br + '\n')
 
@@ -90,25 +81,17 @@ if __name__ == '__main__':
         quit()
     try:
         start = time.time()
-        if select_browser == 'Chrome':
-<<<<<<< HEAD
+        # For Chrome
+        if select_browser in brs and select_browser == 'Chrome':
             browser = webdriver.Chrome(executable_path=identify_os())
+            end = time.time()
+            print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
-        elif select_browser == 'Edge':
+        # For Edge
+        elif select_browser in brs and select_browser == 'Edge':
             browser = webdriver.Edge(executable_path=identify_os())
-            main(browser)
-        elif select_browser == 'Firefox':
-            browser = webdriver.Firefox(executable_path=identify_os())
-=======
-            browser = webdriver.Chrome(identify_os())
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
-            main(browser)
-        elif select_browser == 'Edge':
-            browser = webdriver.Edge(identify_os())
-            end = time.time()
-            print('\nTime Elapsed: ' + str(convert(end-start)))
->>>>>>> e319c2df20a52b072bd89f6fba57bdeec9f6728e
             main(browser)
     except WebDriverException as err:
         print('\n\nNo WebDriver Found For ' + select_browser, err)
