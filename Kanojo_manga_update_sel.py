@@ -6,6 +6,8 @@ from selenium.common.exceptions import WebDriverException
 import colorama
 import os
 import platform
+import time
+import webbrowser
 
 
 def main(driver):
@@ -13,7 +15,6 @@ def main(driver):
     driver.set_window_position(0,0)
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
-
     try:
         article = WebDriverWait(driver, 0).until(
             EC.presence_of_element_located(
@@ -32,6 +33,10 @@ def main(driver):
             print('\nNew Chapter:')
             print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + time.text)
+        
+            if time.text in time_states:
+                webbrowser.open(
+                    'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
     finally:
         driver.quit()
 
@@ -68,6 +73,12 @@ def identify_os():
     return seek_driver(operating_system)
 
 
+def convert(seconds):
+    min, sec = divmod(seconds, 60)
+    hour, min = divmod(min, 60)
+    return "%d:%02d:%02d" % (hour, min, sec)
+
+
 if __name__ == '__main__':
     colorama.init()
     brs = ['Chrome', 'Edge', 'Firefox']
@@ -78,7 +89,9 @@ if __name__ == '__main__':
     if select_browser == 'cancel':
         quit()
     try:
+        start = time.time()
         if select_browser == 'Chrome':
+<<<<<<< HEAD
             browser = webdriver.Chrome(executable_path=identify_os())
             main(browser)
         elif select_browser == 'Edge':
@@ -86,6 +99,16 @@ if __name__ == '__main__':
             main(browser)
         elif select_browser == 'Firefox':
             browser = webdriver.Firefox(executable_path=identify_os())
+=======
+            browser = webdriver.Chrome(identify_os())
+            end = time.time()
+            print('\nTime Elapsed: ' + str(convert(end-start)))
+            main(browser)
+        elif select_browser == 'Edge':
+            browser = webdriver.Edge(identify_os())
+            end = time.time()
+            print('\nTime Elapsed: ' + str(convert(end-start)))
+>>>>>>> e319c2df20a52b072bd89f6fba57bdeec9f6728e
             main(browser)
     except WebDriverException as err:
         print('\n\nNo WebDriver Found For ' + select_browser, err)
