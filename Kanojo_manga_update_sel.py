@@ -73,6 +73,16 @@ def seek_driver(opsys, brs):
             elif 'geckodriver' in files and brs == 'Firefox':
                 return os.path.join(root, 'geckodriver')
 
+    # linux
+    elif opsys == 'Linux':
+        for root, dirs, files in os.walk(cwd):
+            if drivers[0] in files and brs == 'Edge':
+                return os.path.join(root, 'msedgedriver')
+            elif drivers[1] in files and brs == 'Chrome':
+                return os.path.join(root, 'chromedriver')
+            elif 'geckodriver' in files and brs == 'Firefox':
+                return os.path.join(root, 'geckodriver')
+
 # This function identifies your OS and proceeds to the seek_driver() function
 def identify_os(brs):
     operating_system = platform.system()
