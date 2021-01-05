@@ -11,6 +11,7 @@ import time
 import webbrowser
 
 
+# Main Function for collecting the texts from the website
 def main(driver):
     time_states = ['Today', '1 day ago', '2 days ago',
                    '3 days ago', '4 days ago', '5 days ago', '6 days ago']
@@ -21,12 +22,14 @@ def main(driver):
             EC.presence_of_element_located(
                 (By.XPATH, '/html/body/div[1]/div/article[1]'))
         )
+        # Grabbing the Title of the Manga
         for tag in article.find_elements_by_tag_name('h1'):
             title = tag.find_element_by_class_name('post-name')
             print('\n')
             print(colorama.Fore.LIGHTCYAN_EX,
                   title.text, colorama.Style.RESET_ALL)
 
+        # Grabbing the new Released Chapter
         for chapter in article.find_elements_by_xpath('/html/body/div[1]/div/article[1]/div/div[2]/a[2]'):
             new = chapter.find_element_by_class_name('h-6')
             time = driver.find_element_by_xpath(
@@ -35,6 +38,8 @@ def main(driver):
             print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + time.text)
 
+            # If the text meets with the time states,
+            # it will open the browser for you to read the new chapter
             if time.text in time_states:
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
@@ -44,11 +49,12 @@ def main(driver):
     finally:
         driver.quit()
 
-
+# This function searches for your installed WebDriver
 def seek_driver(opsys, brs):
     os.chdir('/')
     cwd = os.getcwd()
     drivers = ['msedgedriver', 'chromedriver', 'geckodriver']
+    # windows
     if opsys == 'Windows':
         for root, dirs, files in os.walk(cwd):
             if drivers[0] + '.exe' in files and brs == 'Edge':
@@ -58,6 +64,7 @@ def seek_driver(opsys, brs):
             elif drivers[2] + '.exe' in files and brs == 'Firefox':
                 return os.path.join(root, 'geckodriver.exe')
 
+    # macos
     elif opsys == 'Darwin':
         for root, dirs, files in os.walk(cwd):
             if drivers[0] in files and brs == 'Edge':
@@ -67,12 +74,12 @@ def seek_driver(opsys, brs):
             elif 'geckodriver' in files and brs == 'Firefox':
                 return os.path.join(root, 'geckodriver')
 
-
+# This function identifies your OS and proceeds to the seek_driver() function
 def identify_os(brs):
     operating_system = platform.system()
     return seek_driver(operating_system, brs)
 
-
+# Just converts the seconds into 00:00:00 format
 def convert(seconds):
     min, sec = divmod(seconds, 60)
     hour, min = divmod(min, 60)
