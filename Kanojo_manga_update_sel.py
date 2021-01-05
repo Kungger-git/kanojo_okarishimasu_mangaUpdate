@@ -13,7 +13,7 @@ import webbrowser
 
 def main(driver):
     time_states = ['Today', '1 day ago', '2 days ago',
-        '3 days ago', '4 days ago', '5 days ago', '6 days ago']
+                   '3 days ago', '4 days ago', '5 days ago', '6 days ago']
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
     try:
@@ -34,37 +34,43 @@ def main(driver):
             print('\nNew Chapter:')
             print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + time.text)
-        
+
             if time.text in time_states:
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
     except WebDriverException as err:
-        print(colorama.Fore.RED, '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
+        print(colorama.Fore.RED,
+              '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
     finally:
         driver.quit()
 
 
-def seek_driver(opsys):
+def seek_driver(opsys, brs):
     os.chdir('/')
     cwd = os.getcwd()
+    drivers = ['msedgedriver', 'chromedriver', 'geckodriver']
     if opsys == 'Windows':
         for root, dirs, files in os.walk(cwd):
-            if 'msedgedriver.exe' in files:
+            if drivers[0] + '.exe' in files and brs == 'Edge':
                 return os.path.join(root, 'msedgedriver.exe')
-            elif 'chromedriver.exe' in files:
+            elif drivers[1] + '.exe' in files and brs == 'Chrome':
                 return os.path.join(root, 'chromedriver.exe')
+            elif drivers[2] + '.exe' in files and brs == 'Firefox':
+                return os.path.join(root, 'geckodriver.exe')
 
     elif opsys == 'Darwin':
         for root, dirs, files in os.walk(cwd):
-            if 'msedgedriver' in files:
+            if drivers[0] in files and brs == 'Edge':
                 return os.path.join(root, 'msedgedriver')
-            elif 'chromedriver' in files:
+            elif drivers[1] in files and brs == 'Chrome':
                 return os.path.join(root, 'chromedriver')
+            elif 'geckodriver' in files and brs == 'Firefox':
+                return os.path.join(root, 'geckodriver')
 
 
-def identify_os():
+def identify_os(brs):
     operating_system = platform.system()
-    return seek_driver(operating_system)
+    return seek_driver(operating_system, brs)
 
 
 def convert(seconds):
@@ -75,7 +81,7 @@ def convert(seconds):
 
 if __name__ == '__main__':
     colorama.init()
-    brs = ['Chrome', 'Edge']
+    brs = ['Chrome', 'Edge', 'Firefox']
     for br in brs:
         print(br + '\n')
 
@@ -86,16 +92,26 @@ if __name__ == '__main__':
         start = time.time()
         # For Chrome
         if select_browser in brs and select_browser == 'Chrome':
-            browser = webdriver.Chrome(executable_path=identify_os())
+            browser = webdriver.Chrome(
+                executable_path=identify_os(select_browser))
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
         # For Edge
         elif select_browser in brs and select_browser == 'Edge':
-            browser = webdriver.Edge(executable_path=identify_os())
+            browser = webdriver.Edge(
+                executable_path=identify_os(select_browser))
+            end = time.time()
+            print('\nTime Elapsed: ' + str(convert(end-start)))
+            main(browser)
+        # For Firefox
+        elif select_browser in brs and select_browser == 'Firefox':
+            browser = webdriver.Firefox(
+                executable_path=identify_os(select_browser))
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
     except WebDriverException as err:
-        print('\n\nNo WebDriver Found For ' + select_browser, err)
+        print(colorama.Fore.RED, '\n\n[!!] No WebDriver Found For ' +
+              select_browser, err, colorama.Style.RESET_ALL)
     print('\n\n')
