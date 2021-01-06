@@ -48,6 +48,7 @@ def main(driver):
     finally:
         driver.quit()
 
+
 # This function searches for your installed WebDriver
 def seek_driver(opsys, brs):
     os.chdir('/')
@@ -73,10 +74,12 @@ def seek_driver(opsys, brs):
             elif 'geckodriver' in files and brs == 'Firefox':
                 return os.path.join(root, 'geckodriver')
 
+
 # This function identifies your OS and proceeds to the seek_driver() function
 def identify_os(brs):
     operating_system = platform.system()
     return seek_driver(operating_system, brs)
+
 
 # Just converts the seconds into 00:00:00 format
 def convert(seconds):
@@ -117,6 +120,8 @@ if __name__ == '__main__':
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
+        else:
+            raise ValueError('\n\n[!!] Bruh')
     except WebDriverException as err:
         print(colorama.Fore.RED, '\n\n[!!] No WebDriver Found For ' +
               select_browser, err, colorama.Style.RESET_ALL)
