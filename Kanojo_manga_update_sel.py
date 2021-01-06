@@ -12,8 +12,13 @@ import webbrowser
 
 # Main Function for collecting the texts from the website
 def main(driver):
-    time_states = ['Today', '1 day ago', '2 days ago',
-                   '3 days ago', '4 days ago', '5 days ago', '6 days ago']
+    time_states_hours = []
+    time_states_days = []
+    for i in range(1, 24):
+        time_states_hours.append(str(i) + ' hours ago')
+    for i in range(1, 8):
+        time_states_days.append(str(i) + ' days ago')
+        
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
     try:
@@ -39,7 +44,7 @@ def main(driver):
 
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
-            if time.text in time_states:
+            if time.text in time_states_hours or time_states_days:
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
     except WebDriverException as err:
