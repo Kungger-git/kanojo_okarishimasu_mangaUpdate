@@ -71,18 +71,8 @@ def seek_driver(opsys, brs):
             elif drivers[2] + '.exe' in files and brs == 'Firefox':
                 return os.path.join(root, 'geckodriver.exe')
 
-    # macos
-    elif opsys == 'Darwin':
-        for root, dirs, files in os.walk(cwd):
-            if drivers[0] in files and brs == 'Edge':
-                return os.path.join(root, 'msedgedriver')
-            elif drivers[1] in files and brs == 'Chrome':
-                return os.path.join(root, 'chromedriver')
-            elif drivers[2] in files and brs == 'Firefox':
-                return os.path.join(root, 'geckodriver')
-
-    # linux
-    elif opsys == 'Linux':
+    # macos and linux
+    elif opsys == 'Darwin' or 'Linux':
         for root, dirs, files in os.walk(cwd):
             if drivers[0] in files and brs == 'Edge':
                 return os.path.join(root, 'msedgedriver')
