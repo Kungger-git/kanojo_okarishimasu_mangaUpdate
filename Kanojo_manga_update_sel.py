@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
+from msedge.selenium_tools import EdgeOptions, Edge
 import colorama
 import os
 import platform
@@ -38,20 +39,22 @@ def main(driver):
         # Grabbing the new Released Chapter
         for chapter in article.find_elements_by_xpath('/html/body/div[1]/div/article[1]/div/div[2]/a[2]'):
             new = chapter.find_element_by_class_name('h-6')
-            time = driver.find_element_by_xpath(
+            uploaded = driver.find_element_by_xpath(
                 '/html/body/div[1]/div/article[2]/ul/li[1]/span')
             print('\nNew Chapter:')
             print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
-                  colorama.Style.RESET_ALL, 'Uploaded ' + time.text)
+                  colorama.Style.RESET_ALL, 'Uploaded ' + uploaded.text)
 
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
-            if time.text in time_states_hours or time_states_days:
+            if uploaded.text in time_states_hours or time_states_days:
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
     except WebDriverException as err:
         print(colorama.Fore.RED,
               '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
+        main(driver)
+        driver.quit()
     finally:
         driver.quit()
 
@@ -108,22 +111,34 @@ if __name__ == '__main__':
         start = time.time()
         # For Chrome
         if select_browser in brs and select_browser == 'Chrome':
+            options = webdriver.ChromeOptions()
+            options.add_argument('--ignore-certificate-errors')
+            options.add_argument('--headless')
+            options.add_argument('--incognito')
             browser = webdriver.Chrome(
-                executable_path=identify_os(select_browser))
+                executable_path=identify_os(select_browser), chrome_options=options)
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
         # For Edge
         elif select_browser in brs and select_browser == 'Edge':
-            browser = webdriver.Edge(
-                executable_path=identify_os(select_browser))
+            options = EdgeOptions()
+            options.use_chromium = True
+            options.add_argument('headless')
+            options.add_argument('disable-gpu')
+            browser = Edge(
+                executable_path=identify_os(select_browser), options=options)
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
         # For Firefox
         elif select_browser in brs and select_browser == 'Firefox':
+            options = webdriver.FirefoxOptions()
+            options.add_argument('--ignore-certificate-errors')
+            options.add_argument('--headless')
+            options.add_argument('--incognito')
             browser = webdriver.Firefox(
-                executable_path=identify_os(select_browser))
+                executable_path=identify_os(select_browser), firefox_options=options)
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
