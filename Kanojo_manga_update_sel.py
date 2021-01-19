@@ -16,8 +16,7 @@ import webbrowser
 
 # Main Function for collecting the texts from the website
 def main(driver):
-    time_states_hours = []
-    time_states_days = []
+    time_states_hours, time_states_days = [], []
     for i in range(1, 24):
         time_states_hours.append(str(i) + ' hours ago')
     for i in range(1, 8):
