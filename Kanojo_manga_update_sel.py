@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
-from msedge.selenium_tools import EdgeOptions, Edge
 import webdriver_conf
 import colorama
 import os
@@ -16,12 +14,9 @@ import webbrowser
 
 # Main Function for collecting the texts from the website
 def main(driver):
-    time_states_hours, time_states_days = [], []
-    for i in range(1, 24):
-        time_states_hours.append(str(i) + ' hours ago')
-    for i in range(1, 8):
-        time_states_days.append(str(i) + ' days ago')
-        
+    time_states_hours = [str(i) + ' hours ago' for i in range(1, 24)]
+    time_states_days = [str(i) + ' days ago' for i in range(1, 8)]
+
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
     try:
@@ -41,15 +36,15 @@ def main(driver):
             new = chapter.find_element_by_class_name('h-6')
             uploaded = driver.find_element_by_xpath(
                 '/html/body/div[1]/div/article[2]/ul/li[1]/span')
-            print('\nNew Chapter:')
-            print(colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
+            print('\nNew Chapter:', colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + uploaded.text)
-
+            
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
-            if uploaded.text in time_states_hours or time_states_days:
+            if uploaded.text in time_states_hours or uploaded.text in time_states_days:
                 webbrowser.open(
-                    'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?')
+                    'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?'
+                )
     except WebDriverException as err:
         print(colorama.Fore.RED,
               '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
