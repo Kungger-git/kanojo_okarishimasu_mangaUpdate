@@ -33,5 +33,3 @@ def get_driver(select_browser, options):
     elif select_browser == 'Firefox':
         return webdriver.Firefox(
             executable_path=identify_os(select_browser), options=options)
-    else:
-        raise KeyError(select_browser + ' does not exist')
