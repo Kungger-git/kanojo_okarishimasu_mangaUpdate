@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 from msedge.selenium_tools import EdgeOptions, Edge
+import webdriver_conf
 import colorama
 import os
 import platform
@@ -54,7 +55,6 @@ def main(driver):
         print(colorama.Fore.RED,
               '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
         main(driver)
-        driver.quit()
     finally:
         driver.quit()
 
@@ -109,36 +109,11 @@ if __name__ == '__main__':
         quit()
     try:
         start = time.time()
-        # For Chrome
-        if select_browser in brs and select_browser == 'Chrome':
-            options = webdriver.ChromeOptions()
-            options.add_argument('--ignore-certificate-errors')
-            options.add_argument('--headless')
-            options.add_argument('--incognito')
-            browser = webdriver.Chrome(
-                executable_path=identify_os(select_browser), chrome_options=options)
-            end = time.time()
-            print('\nTime Elapsed: ' + str(convert(end-start)))
-            main(browser)
-        # For Edge
-        elif select_browser in brs and select_browser == 'Edge':
-            options = EdgeOptions()
-            options.use_chromium = True
-            options.add_argument('headless')
-            options.add_argument('disable-gpu')
-            browser = Edge(
-                executable_path=identify_os(select_browser), options=options)
-            end = time.time()
-            print('\nTime Elapsed: ' + str(convert(end-start)))
-            main(browser)
-        # For Firefox
-        elif select_browser in brs and select_browser == 'Firefox':
-            options = webdriver.FirefoxOptions()
-            options.add_argument('--ignore-certificate-errors')
-            options.add_argument('--headless')
-            options.add_argument('--incognito')
-            browser = webdriver.Firefox(
-                executable_path=identify_os(select_browser), firefox_options=options)
+        if select_browser in brs:    
+            options = webdriver_conf.get_driver_options(select_browser)
+            webdriver_conf.get_all_options(select_browser, options)
+            browser = webdriver_conf.get_driver(select_browser, options)
+
             end = time.time()
             print('\nTime Elapsed: ' + str(convert(end-start)))
             main(browser)
