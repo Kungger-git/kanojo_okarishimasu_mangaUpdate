@@ -4,12 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
-import webdriver_conf
-import colorama
-import os
-import platform
-import time
-import webbrowser
+import webdriver_conf, colorama, os, platform, time, webbrowser
 
 
 # Main Function for collecting the texts from the website
