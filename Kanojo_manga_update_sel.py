@@ -89,15 +89,16 @@ if __name__ == '__main__':
     if select_browser == 'cancel':
         quit()
     try:
-        start = time.time()
         if select_browser in brs:
             options = webdriver_conf.get_driver_options(select_browser)
             webdriver_conf.get_all_options(select_browser, options)
             browser = webdriver_conf.get_driver(select_browser, options)
 
-            end = time.time()
-            print('\nTime Elapsed: ' + str(convert(end-start)))
+            start = time.time()
             main(browser)
+            end = time.time()
+            print(colorama.Fore.YELLOW, '\n[*] Scraping took: ' + 
+                convert(end-start), colorama.Style.RESET_ALL)
         else:
             raise ValueError('\n\n[!!] Bruh')
     except WebDriverException as err:
