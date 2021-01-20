@@ -60,7 +60,7 @@ def seek_driver(opsys, brs):
                 return os.path.join(root, drivers[brs] + '.exe')
 
     # macos and linux
-    elif opsys == 'Darwin' or 'Linux':
+    elif opsys == 'Darwin' or opsys == 'Linux':
         for root, dirs, files in os.walk(cwd):
             if drivers[brs] in files:
                 return os.path.join(root, drivers[brs])
