@@ -34,11 +34,10 @@ def main(driver):
             print('\nNew Chapter:', colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + uploaded.text)
 
-            driver.quit()
-
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
             if uploaded.text == '1 hour ago' or uploaded.text in time_states_hours or uploaded.text in time_states_days:
+                driver.quit()
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?'
                 )
