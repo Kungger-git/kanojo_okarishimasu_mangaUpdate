@@ -9,8 +9,8 @@ import webdriver_conf, colorama, os, platform, time, webbrowser
 
 # Main Function for collecting the texts from the website
 def main(driver):
-    time_states_hours = [str(i) + ' hours ago' for i in range(2, 24)]
-    time_states_days = [str(i) + ' days ago' for i in range(1, 8)]
+    hours = [f'{i} hour{plural_s(i)} ago' for i in range(1, 24)]
+    days = [f'{i} day{plural_s(i)} ago' for i in range(1, 8)]
 
     driver.get(
         'https://mangajar.com/manga/kanojo-okarishimasu')
@@ -36,7 +36,7 @@ def main(driver):
 
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
-            if uploaded.text == '1 hour ago' or uploaded.text in time_states_hours or uploaded.text in time_states_days:
+            if uploaded.text in hours or uploaded.text in days:
                 driver.quit()
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?'
@@ -45,6 +45,12 @@ def main(driver):
         print(colorama.Fore.RED,
               '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
         main(driver)
+
+
+# makes the string plural if uploaded.text is not == 1
+# example: 1 day ago/2 days ago
+def plural_s(v):
+    return 's' if abs(v) != 1 else ''
 
 
 # This function searches for your installed WebDriver
