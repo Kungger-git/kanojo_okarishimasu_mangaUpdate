@@ -8,3 +8,6 @@ __pycache__
 # vim
 ..gitignore.un~
 .gitignore~
+*.swp
+*.swo
+*.py~
