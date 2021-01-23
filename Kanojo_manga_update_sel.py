@@ -87,8 +87,8 @@ def convert(seconds):
 if __name__ == '__main__':
     colorama.init()
     brs = ['Chrome', 'Edge', 'Firefox']
-    for br in brs:
-        print(br + '\n')
+    for i in range(len(brs)):
+        print(brs[i] + '\n')
 
     select_browser = str(input('Select Browser: '))
     if select_browser == 'cancel':
