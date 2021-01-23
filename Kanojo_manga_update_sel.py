@@ -74,8 +74,7 @@ def seek_driver(opsys, brs):
 
 # This function identifies your OS and proceeds to the seek_driver() function
 def identify_os(brs):
-    operating_system = platform.system()
-    return seek_driver(operating_system, brs)
+    return seek_driver(platform.system(), brs)
 
 
 # Just converts the seconds into 00:00:00 format

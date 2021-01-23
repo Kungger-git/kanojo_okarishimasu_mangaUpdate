@@ -19,7 +19,7 @@ def get_all_options(browser, options):
         options.use_chromium = True
         options.add_argument('headless')
         options.add_argument('disable-gpu')
-    elif browser == 'Chrome' or 'Firefox':
+    elif browser == 'Chrome' or browser == 'Firefox':
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--incognito')
         options.add_argument('--headless')
