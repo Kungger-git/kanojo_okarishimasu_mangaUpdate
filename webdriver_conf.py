@@ -9,7 +9,7 @@ def get_driver_options(browser):
     driver_options = {
         'Chrome' : webdriver.ChromeOptions,
         'Edge' : EdgeOptions,
-        'Firefox' : webdriver.Firefox}
+        'Firefox' : webdriver.FirefoxOptions}
     return driver_options[browser]()
 
 def get_all_options(browser, options):
