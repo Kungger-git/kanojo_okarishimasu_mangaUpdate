@@ -8,6 +8,9 @@ def geckodriver_log_finder():
     for root, dirs, files in os.walk(os.getcwd()):
         if 'geckodriver.log' in files:
             return os.path.join(root, 'geckodriver.log')
+        else:
+            with open('geckodriver.log', 'w') as f:
+                pass
     
 
 def get_driver_options(browser):
