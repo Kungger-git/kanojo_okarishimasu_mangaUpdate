@@ -102,8 +102,8 @@ if __name__ == '__main__':
             start = time.time()
             main(browser)
             end = time.time()
-            print(colorama.Fore.YELLOW, '\n[*] Scraping took: ' + 
-                convert(end-start), colorama.Style.RESET_ALL)
+            print(colorama.Fore.YELLOW, '\n[*] Scraping took: ' +
+                  convert(end-start), colorama.Style.RESET_ALL)
         else:
             raise ValueError('\n\n[!!] Bruh')
     except WebDriverException as err:
