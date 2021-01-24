@@ -1,9 +1,14 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
 from Kanojo_manga_update_sel import identify_os, convert
-import time
-import colorama
+import time, colorama, os
 
+
+def geckodriver_log_finder():
+    for root, dirs, files in os.walk(os.getcwd()):
+        if 'geckodriver.log' in files:
+            return os.path.join(root, 'geckodriver.log')
+    
 
 def get_driver_options(browser):
     driver_options = {
@@ -34,7 +39,7 @@ def get_driver(select_browser, options):
             return Edge(
                 executable_path=identify_os(select_browser), options=options)
         elif select_browser == 'Firefox':
-            return webdriver.Firefox(
+            return webdriver.Firefox(service_log_path=geckodriver_log_finder(),
                 executable_path=identify_os(select_browser), options=options)
     finally:
         end = time.time()

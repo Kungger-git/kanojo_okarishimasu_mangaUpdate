@@ -11,6 +11,3 @@ __pycache__
 *.swp
 *.swo
 *.py~
-
-# Firefox
-geckodriver.log
