@@ -6,13 +6,11 @@ import colorama
 
 
 def get_driver_options(browser):
-    if browser == 'Chrome':
-        return webdriver.ChromeOptions()
-    elif browser == 'Edge':
-        return EdgeOptions()
-    elif browser == 'Firefox':
-        return webdriver.FirefoxOptions()
-
+    driver_options = {
+        'Chrome' : webdriver.ChromeOptions,
+        'Edge' : EdgeOptions,
+        'Firefox' : webdriver.Firefox}
+    return driver_options[browser]()
 
 def get_all_options(browser, options):
     if browser == 'Edge':
