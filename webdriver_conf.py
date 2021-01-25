@@ -16,7 +16,7 @@ def log_finder(driver_browser):
         else:
             if not os.path.exists('logs/'):
                 os.makedirs('logs/')
-            with open(f'logs/{log_files[driver_browser]}', 'w') as f:
+            with open(f'logs/{log_files[driver_browser]}') as f:
                 pass
 
 
