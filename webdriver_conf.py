@@ -1,6 +1,6 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
-from Kanojo_manga_update_sel import identify_os, convert, seek_driver
+from Kanojo_manga_update_sel import identify_os, convert
 import time, colorama, os
 
 
