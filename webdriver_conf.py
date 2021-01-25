@@ -6,25 +6,28 @@ import time, colorama, os
 
 def log_finder(driver_browser):
     log_files = {
-            'Chrome' : 'chromedriver.log',
-            'Edge' : 'msedgedriver.log',
-            'Firefox' : 'geckodriver.log'
-        }
+        'Chrome': 'chromedriver.log',
+        'Edge': 'msedgedriver.log',
+        'Firefox': 'geckodriver.log'
+    }
     for root, dirs, files in os.walk(os.getcwd()):
         if log_files[driver_browser] in files:
             return os.path.join(root, log_files[driver_browser])
         else:
-            with open(log_files[driver_browser], 'w') as f:
+            if not os.path.exists('logs/'):
+                os.makedirs('logs/')
+            with open(f'logs/{log_files[driver_browser]}', 'w') as f:
                 pass
-    
+
 
 def get_driver_options(browser):
     driver_options = {
-            'Chrome' : webdriver.ChromeOptions,
-            'Edge' : EdgeOptions,
-            'Firefox' : webdriver.FirefoxOptions
-        }
+        'Chrome': webdriver.ChromeOptions,
+        'Edge': EdgeOptions,
+        'Firefox': webdriver.FirefoxOptions
+    }
     return driver_options[browser]()
+
 
 def get_all_options(browser, options):
     if browser == 'Edge':
@@ -42,10 +45,10 @@ def get_driver(select_browser, options):
         colorama.init()
         start = time.time()
         webdriver_browsers = {
-                'Chrome' : webdriver.Chrome,
-                'Edge' : Edge,
-                'Firefox' : webdriver.Firefox
-            }
+            'Chrome': webdriver.Chrome,
+            'Edge': Edge,
+            'Firefox': webdriver.Firefox
+        }
         return webdriver_browsers[select_browser](service_log_path=log_finder(select_browser), executable_path=identify_os(select_browser), options=options)
     finally:
         end = time.time()
