@@ -12,5 +12,5 @@ __pycache__
 *.swo
 *.py~
 
-# Firefox
-geckodriver.log
+# logs
+*.log

@@ -1,23 +1,29 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
-from Kanojo_manga_update_sel import identify_os, convert
+from Kanojo_manga_update_sel import identify_os, convert, seek_driver
 import time, colorama, os
 
 
-def geckodriver_log_finder():
+def log_finder(driver_browser):
+    log_files = {
+            'Chrome' : 'chromedriver.log',
+            'Edge' : 'msedgedriver.log',
+            'Firefox' : 'geckodriver.log'
+        }
     for root, dirs, files in os.walk(os.getcwd()):
-        if 'geckodriver.log' in files:
-            return os.path.join(root, 'geckodriver.log')
+        if log_files[driver_browser] in files:
+            return os.path.join(root, log_files[driver_browser])
         else:
-            with open('geckodriver.log', 'w') as f:
+            with open(log_files[driver_browser], 'w') as f:
                 pass
     
 
 def get_driver_options(browser):
     driver_options = {
-        'Chrome' : webdriver.ChromeOptions,
-        'Edge' : EdgeOptions,
-        'Firefox' : webdriver.FirefoxOptions}
+            'Chrome' : webdriver.ChromeOptions,
+            'Edge' : EdgeOptions,
+            'Firefox' : webdriver.FirefoxOptions
+        }
     return driver_options[browser]()
 
 def get_all_options(browser, options):
@@ -35,15 +41,12 @@ def get_driver(select_browser, options):
     try:
         colorama.init()
         start = time.time()
-        if select_browser == 'Chrome':
-            return webdriver.Chrome(
-                executable_path=identify_os(select_browser), options=options)
-        elif select_browser == 'Edge':
-            return Edge(
-                executable_path=identify_os(select_browser), options=options)
-        elif select_browser == 'Firefox':
-            return webdriver.Firefox(service_log_path=geckodriver_log_finder(),
-                executable_path=identify_os(select_browser), options=options)
+        webdriver_browsers = {
+                'Chrome' : webdriver.Chrome,
+                'Edge' : Edge,
+                'Firefox' : webdriver.Firefox
+            }
+        return webdriver_browsers[select_browser](service_log_path=log_finder(select_browser), executable_path=identify_os(select_browser), options=options)
     finally:
         end = time.time()
         print(colorama.Fore.YELLOW, '\n[*] Driver Found in: ' +
