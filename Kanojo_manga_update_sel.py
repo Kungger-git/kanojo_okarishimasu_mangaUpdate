@@ -9,7 +9,7 @@ import webdriver_conf, colorama, os, platform, time, webbrowser
 
 # Main Function for collecting the texts from the website
 def main(driver):
-    minutes = [f'{i} hour{plural_s(i)} ago' for i in range(1, 60)]
+    minutes = [f'{i} minute{plural_s(i)} ago' for i in range(1, 60)]
     hours = [f'{i} hour{plural_s(i)} ago' for i in range(1, 24)]
     days = [f'{i} day{plural_s(i)} ago' for i in range(1, 8)]
 
@@ -34,10 +34,11 @@ def main(driver):
                 '/html/body/div[1]/div/article[2]/ul/li[1]/span')
             print('\nNew Chapter:', colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
                   colorama.Style.RESET_ALL, 'Uploaded ' + uploaded.text)
+            uploaded = uploaded.text
 
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
-            if uploaded.text in hours or uploaded.text in days:
+            if uploaded in minutes or uploaded in hours or uploaded in days:
                 driver.quit()
                 webbrowser.open(
                     'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?'
