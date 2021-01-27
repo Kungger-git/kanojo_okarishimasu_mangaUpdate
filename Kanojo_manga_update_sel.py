@@ -9,6 +9,7 @@ import webdriver_conf, colorama, os, platform, time, webbrowser
 
 # Main Function for collecting the texts from the website
 def main(driver):
+    minutes = [f'{i} hour{plural_s(i)} ago' for i in range(1, 60)]
     hours = [f'{i} hour{plural_s(i)} ago' for i in range(1, 24)]
     days = [f'{i} day{plural_s(i)} ago' for i in range(1, 8)]
 
