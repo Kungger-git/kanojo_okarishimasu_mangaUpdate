@@ -44,7 +44,6 @@ def main(driver):
             if uploaded in minutes or uploaded in hours or uploaded in days:
                 for page in pages:
                     new_line = page+new.text.split()[1]
-                    driver.quit()
                     webbrowser.open(
                         f'https://w11.mangafreak.net/{new_line}'
                     )
@@ -53,6 +52,8 @@ def main(driver):
               '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
         main(driver)
 
+    finally:
+        driver.quit()
 
 # makes the string plural if uploaded.text is != 1
 # example: 1 day ago/2 days ago
