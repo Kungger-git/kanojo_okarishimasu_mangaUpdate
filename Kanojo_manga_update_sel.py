@@ -47,7 +47,7 @@ def main(driver):
         main(driver)
 
 
-# makes the string plural if uploaded.text is not == 1
+# makes the string plural if uploaded.text is != 1
 # example: 1 day ago/2 days ago
 def plural_s(v):
     return 's' if abs(v) != 1 else ''
