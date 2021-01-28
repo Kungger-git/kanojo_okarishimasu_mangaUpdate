@@ -43,8 +43,8 @@ def main(driver):
             # it will open the browser for you to read the new chapter
             if uploaded in minutes or uploaded in hours or uploaded in days:
                 for page in pages:
-                    driver.quit()
                     new_line = page+new.text.split()[1]
+                    driver.quit()
                     webbrowser.open(
                         f'https://w11.mangafreak.net/{new_line}'
                     )
