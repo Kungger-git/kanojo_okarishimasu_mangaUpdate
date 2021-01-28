@@ -21,11 +21,14 @@ def main(driver):
                 (By.XPATH, '/html/body/div[1]/div/article[1]'))
         )
         # Grabbing the Title of the Manga
+        pages = []
         for tag in article.find_elements_by_tag_name('h1'):
             title = tag.find_element_by_class_name('post-name')
             print('\n')
             print(colorama.Fore.LIGHTCYAN_EX,
                   title.text, colorama.Style.RESET_ALL)
+            fmt = f"Read1_{title.text.replace(', ','_').strip()}_"
+            pages.append(fmt)
 
         # Grabbing the new Released Chapter
         for chapter in article.find_elements_by_xpath('/html/body/div[1]/div/article[1]/div/div[2]/a[2]'):
@@ -39,10 +42,12 @@ def main(driver):
             # If the text meets with the time states,
             # it will open the browser for you to read the new chapter
             if uploaded in minutes or uploaded in hours or uploaded in days:
-                driver.quit()
-                webbrowser.open(
-                    'https://w11.mangafreak.net/Manga/Kanojo_Okarishimasu?'
-                )
+                for page in pages:
+                    driver.quit()
+                    new_line = page+new.text.split()[1]
+                    webbrowser.open(
+                        f'https://w11.mangafreak.net/{new_line}'
+                    )
     except WebDriverException as err:
         print(colorama.Fore.RED,
               '[!!] WebDriver Failed To Function!', err, colorama.Style.RESET_ALL)
