@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
