@@ -63,7 +63,6 @@ def plural_s(v):
 
 # This function searches for your installed WebDriver
 def seek_driver(opsys, brs):
-    os.chdir('/')
     cwd = os.getcwd()
     drivers = {'Edge': 'msedgedriver',
                'Chrome': 'chromedriver', 'Firefox': 'geckodriver'}
