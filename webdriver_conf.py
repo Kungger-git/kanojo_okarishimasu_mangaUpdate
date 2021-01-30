@@ -49,9 +49,7 @@ def get_driver(select_browser, options):
             'Edge': Edge,
             'Firefox': webdriver.Firefox
         }
-        return webdriver_browsers[select_browser](
-            service_log_path=log_finder(select_browser),
-            executable_path=identify_os(select_browser), options=options)
+        return webdriver_browsers[select_browser](service_log_path=log_finder(select_browser), executable_path=identify_os(select_browser), options=options)
     finally:
         end = time.time()
         print(colorama.Fore.YELLOW, '\n[*] Driver Found in: ' +
