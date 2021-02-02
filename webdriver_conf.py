@@ -56,5 +56,5 @@ def get_driver(select_browser, options):
         )
     finally:
         end = time.time()
-        print(colorama.Fore.YELLOW, '\n[*] Driver Found in: ' +
-              convert(end-start), colorama.Style.RESET_ALL)
+        print(colorama.Fore.YELLOW,
+              f'\n[*] Driver Found in: {convert(end-start)}', colorama.Style.RESET_ALL)
