@@ -32,7 +32,8 @@ def main(driver):
 
         # Grabbing the new Released Chapter
         for chapter in article.find_elements_by_xpath('/html/body/div[1]/div/article[1]/div/div[2]/a[2]'):
-            new = chapter.find_element_by_class_name('h-6')
+            new = chapter.find_element_by_xpath(
+                '/html/body/div[1]/div/article[2]/ul/li[1]/a')
             uploaded = driver.find_element_by_xpath(
                 '/html/body/div[1]/div/article[2]/ul/li[1]/span')
             print('\nNew Chapter:', colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),

@@ -4,6 +4,7 @@
 # vs code
 .vscode
 __pycache__
+.mypy_cache
 
 # vim
 ..gitignore.un~
