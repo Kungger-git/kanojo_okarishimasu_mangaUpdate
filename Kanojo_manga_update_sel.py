@@ -111,11 +111,11 @@ if __name__ == '__main__':
             start = time.time()
             main(browser)
             end = time.time()
-            print(colorama.Fore.YELLOW, '\n[*] Scraping took: ' +
-                  convert(end-start), colorama.Style.RESET_ALL)
+            print(colorama.Fore.YELLOW,
+                f'\n[*] Scraping took: {convert(end-start)}', colorama.Style.RESET_ALL)
         else:
             raise ValueError('\n\n[!!] Bruh')
     except WebDriverException as err:
-        print(colorama.Fore.RED, '\n\n[!!] No WebDriver Found For ' +
-              select_browser, err, colorama.Style.RESET_ALL)
+        print(colorama.Fore.RED,
+            f'\n\n[!!] No WebDriver Found For: {select_browser}', err, colorama.Style.RESET_ALL)
     print('\n\n')
