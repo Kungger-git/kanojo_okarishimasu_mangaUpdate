@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
-import webdriver_conf, colorama, os, platform, time, webbrowser
+import webdriver_conf, colorama, os, time, webbrowser
 
 
 # Main Function for collecting the texts from the website
@@ -60,31 +60,6 @@ def main(driver):
 # example: 1 day ago/2 days ago
 def plural_s(v):
     return 's' if abs(v) != 1 else ''
-
-
-# This function searches for your installed WebDriver
-def seek_driver(opsys, brs):
-    os.chdir('/')
-    cwd = os.getcwd()
-    drivers = {'Edge': 'msedgedriver',
-               'Chrome': 'chromedriver', 'Firefox': 'geckodriver'}
-    # windows
-    if opsys == 'Windows':
-        for root, dirs, files in os.walk(cwd):
-            dirs = dirs
-            if drivers[brs] + '.exe' in files:
-                return os.path.join(root, drivers[brs] + '.exe')
-
-    # macos and linux
-    elif opsys == 'Darwin' or opsys == 'Linux':
-        for root, dirs, files in os.walk(cwd):
-            if drivers[brs] in files:
-                return os.path.join(root, drivers[brs])
-
-
-# This function identifies your OS and proceeds to the seek_driver() function
-def identify_os(brs):
-    return seek_driver(platform.system(), brs)
 
 
 # Just converts the seconds into 00:00:00 format

@@ -1,7 +1,31 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
-from Kanojo_manga_update_sel import identify_os, convert
-import time, colorama, os
+import time, colorama, os, platform
+
+
+# This function searches for your installed WebDriver
+def seek_driver(opsys, brs):
+    os.chdir('/')
+    cwd = os.getcwd()
+    drivers = {'Edge': 'msedgedriver',
+               'Chrome': 'chromedriver', 'Firefox': 'geckodriver'}
+    # windows
+    if opsys == 'Windows':
+        for root, dirs, files in os.walk(cwd):
+            dirs = dirs
+            if drivers[brs] + '.exe' in files:
+                return os.path.join(root, drivers[brs] + '.exe')
+
+    # macos and linux
+    elif opsys == 'Darwin' or opsys == 'Linux':
+        for root, dirs, files in os.walk(cwd):
+            if drivers[brs] in files:
+                return os.path.join(root, drivers[brs])
+
+
+# This function identifies your OS and proceeds to the seek_driver() function
+def identify_os(brs):
+    return seek_driver(platform.system(), brs)
 
 
 def log_finder(driver_browser):
