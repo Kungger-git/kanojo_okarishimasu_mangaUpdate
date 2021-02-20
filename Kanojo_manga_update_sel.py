@@ -71,6 +71,7 @@ def seek_driver(opsys, brs):
     # windows
     if opsys == 'Windows':
         for root, dirs, files in os.walk(cwd):
+            dirs = dirs
             if drivers[brs] + '.exe' in files:
                 return os.path.join(root, drivers[brs] + '.exe')
 

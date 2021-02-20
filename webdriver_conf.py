@@ -11,12 +11,14 @@ def log_finder(driver_browser):
         'Firefox': 'geckodriver.log'
     }
     for root, dirs, files in os.walk(os.getcwd()):
+        dirs = dirs
         if log_files[driver_browser] in files:
             return os.path.join(root, log_files[driver_browser])
         else:
             if not os.path.exists('logs/'):
                 os.makedirs('logs/')
             with open(f'logs/{log_files[driver_browser]}', 'a') as f:
+                f.close
                 pass
 
 
@@ -42,7 +44,6 @@ def get_all_options(browser, options):
 
 def get_driver(select_browser, options):
     colorama.init()
-    start = time.time()
     webdriver_browsers = {
         'Chrome': webdriver.Chrome,
         'Edge': Edge,
@@ -53,6 +54,3 @@ def get_driver(select_browser, options):
         executable_path=identify_os(select_browser),
         options=options
     )
-    end = time.time()
-    print(colorama.Fore.YELLOW,
-          f'\n[*] Driver Found in: {convert(end-start)}', colorama.Style.RESET_ALL)
