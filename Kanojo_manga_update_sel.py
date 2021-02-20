@@ -37,7 +37,7 @@ def main(driver):
             uploaded = driver.find_element_by_xpath(
                 '/html/body/div[1]/div/article[2]/ul/li[1]/span')
             print('\nNew Chapter:', colorama.Fore.GREEN, new.text.replace('Read', 'Chapter'),
-                  colorama.Style.RESET_ALL, 'Uploaded ' + uploaded.text)
+                  colorama.Style.RESET_ALL, f'Uploaded {uploaded.text}')
             uploaded = uploaded.text
 
             # If the text meets with the time states,
